@@ -1,0 +1,24 @@
+version: "3.8"
+services:
+  ingress_demo :
+    build: .
+    ports:
+      - "54321"
+    environment:
+      CT_POD_TYPE: INGRESS_POD_DEMO
+      CT_FE_HOST: ingress_demo
+      CT_BE_HOST: service_demo
+      CT_DB_HOST: psql
+  service_demo :
+    build: .
+    expose:
+      - "12345"
+    environment:
+      CT_POD_TYPE: SERVICE_POD_DEMO
+      CT_FE_HOST: ingress_demo
+      CT_BE_HOST: service_demo
+      CT_DB_HOST: psql
+  psql:
+    build: ./db/
+    expose:
+      - "5432"
